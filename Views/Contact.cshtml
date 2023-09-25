@@ -1,0 +1,44 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Contact>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "_Main.cshtml";
+}
+
+<!-- Contact Info -->
+<main class="contactinfo">
+    <section class="container">
+        <div class="details">
+            <div class="frame">
+                <h3>Visit us</h3>
+                <p>@Model.Value("contactAddress")</p>
+            </div>
+            <div class="frame">
+                <h3>Call us</h3>
+                <p>@Model.Value("contactPhone1")<br>@Model.Value("contactPhone2")</p>
+            </div>
+            <div class="frame">
+                <h3>Email us</h3>
+                <p>@Model.Value("contactEmail1")<br>@Model.Value("contactEmail2")</p>
+            </div>
+        </div>
+        <form class="message" action="post">
+            <h2>Leave us a message<br> for any information.</h2>
+            <input placeholder="Name*" type="text">
+            <input placeholder="Email*" type="text">
+            <input class="msg" placeholder="Your Message*" type="text">
+            <button class="btn theme-btn">Send Message <i class="fa-solid fa-arrow-up-right"></i></button>
+        </form>
+    </section>
+    <section>
+        <iframe 
+        class="map" 
+        title='googlemaps' 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2034.260750868198!2d18.020033016155036!3d59.345295116784314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d86c5590a35%3A0xac5dd727a529fe56!2sEC%20Utbildning!5e0!3m2!1ssv!2sse!4v1666352168432!5m2!1ssv!2sse" 
+        allowFullScreen="" 
+        loading="lazy" 
+        referrerPolicy="no-referrer-when-downgrade">
+
+        </iframe>
+    </section>
+</main>

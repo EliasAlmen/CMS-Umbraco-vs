@@ -1,0 +1,140 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "_Main.cshtml";
+}
+
+<section class="logos container" role="region">
+    @foreach(var logoBlock in Model.Logos)
+    {
+        var logo = logoBlock.Content as LogoItem;
+
+        if(logo != null)
+        {
+            var mediaItem = logo.LogoImage;
+
+            if(mediaItem != null)
+            {
+                var imageUrl = mediaItem.Url();
+                <img src="@imageUrl" alt="@logo.LogoAltText" />
+            }
+        }
+    } 
+</section>
+
+<!--FEATURES-->
+@{
+    var heading = Model.FeatHeadline;
+    var subheading = Model.FeatSubheading;
+    var learnMoreLink = Model.LearnMoreLink;
+}
+<section class="features container" role="region">
+    <div class="learn">
+        <p>@subheading</p>
+        <h1>@heading</h1>
+        <a class="btn theme-btn" href="@learnMoreLink">Learn More <i class="fa-solid fa-arrow-up-right"></i></a>
+    </div>
+    <div class="info">
+        @foreach (var featureBlock in Model.FeatList)
+        {
+            var feature = featureBlock.Content as FeatListItem;
+
+            if (feature != null)
+            {
+                <article class="feature-item">
+                    <i class="fa-regular @feature.Icon"></i>
+                    <h4>@feature.FeatListItemTitle</h4>
+                    <p>@feature.FeatListItemDescription</p>
+                </article>
+            }
+        }
+    </div>
+</section>
+
+<!-- ABOUT COMPANY -->
+<section class="about container" role="region">
+    <div class="pic">
+        @{
+            var mediaItem2 = Model.AboutImage;
+            var imageUrl2 = mediaItem2.Url();
+        }
+        <img class="daria" src="@imageUrl2"
+            alt="@Model.Value("aboutImageAltText")" height="615" width="533">
+        <div class="frame">
+            <h4>@Model.Value("aboutImageTextName"), <span>@Model.Value("aboutImageTextNameTitle")</span></h4>
+            <p>"@Model.Value("aboutImageTextBody")"</p>
+        </div>
+    </div>
+    <div class="consulting">
+        <div>
+            <h6>@Model.Value("aboutSubHeadline")</h6>
+            <h3>@Model.Value("aboutHeadline")</h3>
+        </div>
+        <p>@Model.Value("aboutBody1")</p>
+        <p>@Model.Value("aboutBody2")</p>
+        <div class="buttons">
+            <a href="#" class="btn dark-btn">Learn More <i class="fa-solid fa-arrow-up-right"></i></a>
+            <a href="#" class="btn grey-btn"><i class="fa-solid fa-play"></i>Intro Video</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- OUR SERVICES -->
+<section class="services">
+    <img class="bg-lines" src="~/images/background-lines.svg" alt="background lines">
+    <div class="container">
+        <h6>@Model.Value("serviceSubheadline")</h6>
+        <h3>@Model.Value("serviceHeadline")</h3>
+        <div class="cards">
+            
+            @foreach (var serviceBlock in Model.ServiceList)
+            {
+                var service = serviceBlock.Content as ServiceListItem;
+            
+                <div class="card-custom">
+                    <div class="underline"></div>
+                    <h5>@service.ServiceListItemHeadline</h5>
+                    <p class="body">@service.ServiceListItemBody</p>
+                    <div class="basecircle"><a href="" class="arrow"><i class="fa-light fa-arrow-right"></i></a></div>
+                </div>
+            
+            }
+        </div>
+        <div class="button">
+            <a href="" class="btn grey-btn">Browse Services <i class="fa-solid fa-arrow-up-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!--WHY-->
+    <section class="why">
+        <div class="container">
+            <div class="text-content">
+                <h6 class="subtitle">@Model.Value("whySubline")</h6>
+                <h3 class="title">@Model.Value("whyHeadline")</h3>
+                <div class="list">
+                    @foreach (var whyBlock in Model.WhyList)
+                    {
+                        var why = whyBlock.Content as WhyListItem;
+                        <div class="item">
+                            <i class="icon fa-regular @why.WhyListItemIcon"></i>
+                            <div class="text">
+                                <h3 class="item-title">@why.WhyListItemHeadline</h3>
+                                <p class="item-description">@why.WhyListItemBody</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="images">
+                <div class="frame"></div>
+                @{
+                    var mediaItem3 = Model.WhyImage;
+                    var imageUrl3 = mediaItem3.Url();
+                }
+                <img src="@imageUrl3" alt="" class="photo">
+            </div>
+        </div>
+    </section>
