@@ -138,3 +138,101 @@
             </div>
         </div>
     </section>
+    
+    
+    <!-- Project -->
+    <section class="project">
+        <div class="container">
+            <h6>@Model.Value("proSubline")</h6>
+            <h3>@Model.Value("proHeadline")</h3>
+            <div class="cards">
+                @foreach (var projectBlock in Model.ProList)
+                {
+                    var pro = projectBlock.Content as ProListItem;
+                    var mediaItem4 = pro.ProListImage;
+                    var imageUrl4 = mediaItem4.Url();
+                    
+                    <div class="card-custom">
+                        <img src="@imageUrl4" alt="">
+                        <h5>@pro.ProListHeadline</h5>
+                        <p></p>
+                        <a href="" class="btn light-btn">Read More <i class="fa-solid fa-arrow-up-right"></i></a>
+                    </div>
+                }
+            </div>
+            <a href="" class="btn dark-btn">All Recent Projects <i class="fa-solid fa-arrow-up-right"></i></a>
+        </div>
+    </section>
+    
+    <!-- Team -->
+    <section class="team">
+        <div class="container">
+            <div class="toprow">
+                <div class="text">
+                    <h6>@Model.Value("teamSubline")</h3>
+                    <h3>@Model.Value("teamHeadline")</h3>
+                </div>
+                <a href="" class="btn theme-btn">Browse Team <i class="fa-solid fa-arrow-up-right"></i></a>
+            </div>
+            <div class="team-cards">
+                
+                @foreach (var teamBlock in Model.TeamList)
+                {
+                    var team = teamBlock.Content as TeamListItem;
+                    var mediaItem5 = team.TeamListItemImage;
+                    var imageUrl5 = mediaItem5.Url();
+                    
+                    <div class="card-custom">
+                        <img width="308" height="420"
+                            src="@imageUrl5" alt="">
+                        <h5>@team.TeamListItemName</h5>
+                        <p>@team.TeamListItemRole</p>
+                    </div>
+                }
+                
+            </div>
+            <div class="carousel">
+                <span><i class="fa-solid fa-circle"></i></span>
+                <span><i class="fa-solid fa-circle"></i></span>
+                <span><i class="fa-solid fa-circle"></i></span>
+                <span><i class="fa-solid fa-circle"></i></span>
+                <span><i class="fa-solid fa-circle"></i></span>
+            </div>
+            <div class="testemonial">
+                <div class="frame">
+                    <h6>@Model.Value("testimonialSubline")</h6>
+                    <h3>@Model.Value("testimonialHeadline")</h3>
+                    <div class="reviews">
+                        
+                        @foreach (var testimonialBlock in Model.TestimonialList)
+                        {
+                            var testimonial = testimonialBlock.Content as TestimonialListData;
+                            var mediaItem6 = testimonial.TestimonialListImage;
+                            var imageUrl6 = mediaItem6.Url();
+                            
+                            <div class="review">
+                                <div class="rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="comment">
+                                    <p>@testimonial.TestimonialListComment</p>
+                                </div>
+                                <div class="customer">
+                                    <img height="70" width="70" src="@imageUrl6" alt="">
+                                    <div>
+                                        <h3>@testimonial.TestimonialListName</h3>
+                                        <h6>@testimonial.TestimonialListRole</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <a href="" class="btn dark-btn">All Reviews <i class="fa-light fa-arrow-up-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
