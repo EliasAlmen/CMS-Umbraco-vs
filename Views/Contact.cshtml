@@ -1,8 +1,12 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+﻿@using EC07_CMS_Umbraco_vs.Controllers;
+@using EC07_CMS_Umbraco_vs.ViewModels;
+@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Contact>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = "_Main.cshtml";
+    Layout = "_Main.cshtml";
+    var contactForm = new ContactFormViewModel();
+
 }
 
 <!-- Contact Info -->
@@ -22,14 +26,45 @@
                 <p>@Model.Value("contactEmail1")<br>@Model.Value("contactEmail2")</p>
             </div>
         </div>
-        <form class="message" action="post">
-            <h2>Leave us a message<br> for any information.</h2>
-            <input placeholder="Name*" type="text">
-            <input placeholder="Email*" type="text">
-            <input class="msg" placeholder="Your Message*" type="text">
-            <button class="btn theme-btn">Send Message <i class="fa-solid fa-arrow-up-right"></i></button>
-        </form>
+        @using (Html.BeginUmbracoForm("HandleContactForm", "Contact", FormMethod.Post))
+        {
+            <div class="message">
+                <h2>Leave us a message<br> for any information.</h2>
+                <div asp-validation-summary="ModelOnly"></div>
+                @if (TempData["FormSuccess"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["FormSuccess"]
+                    </div>
+                }
+                <!-- Name -->
+                <div class="form-group">
+                    <span style="color:red;font-weight:bolder;" class="red-text" asp-validation-for="@contactForm.Name"></span>
+                    <input asp-for="@contactForm.Name" class="form-control" type="text" placeholder="Name*" maxlength="80" />
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <span style="color:red;font-weight:bolder; " asp-validation-for="@contactForm.EmailAddress"></span>
+                    <input asp-for="@contactForm.EmailAddress" class="form-control" type="email" placeholder="Email*" maxlength="255" />
+                </div>
+
+                <!-- Comment -->
+                <div class="form-group">
+                    <span style="color:red;font-weight:bolder; " asp-validation-for="@contactForm.Comment"></span>
+                    <input asp-for="@contactForm.Comment" class="form-control msg" type="text" placeholder="Your message*" maxlength="500">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn theme-btn">Send Message <i class="fa-solid fa-arrow-up-right"></i></button>
+                </div>
+            </div>
+        }
     </section>
+    
+    
+
+    
     <section>
         <iframe 
         class="map" 
@@ -42,3 +77,5 @@
         </iframe>
     </section>
 </main>
+
+
