@@ -1101,7 +1101,7 @@ header .bg-lines {
 #articlesgrid .articles {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 10px;
 }
 
@@ -1300,4 +1300,57 @@ header .bg-lines {
   width: 100%;
   height: 620px;
 }
-        
+
+.item-pagination {
+    font-family: Arial, sans-serif; /* Replace this with your preferred font */
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.item-link {
+    display: inline-block;
+    padding: 5px 10px;
+    color: #555;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-radius: 3px;
+}
+
+.item-link:hover {
+    background-color: #e6e6e6;
+}
+.item-link.active {
+    color: #fff;
+    background-color: #191919;
+    pointer-events: none; /* To disable the link */
+}
+.link-prev, .link-next {
+    font-size: 1.2em; 
+}
+
+.link-prev i, .link-next i {
+    vertical-align: middle;
+}
+ .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.tags span {
+    background-color: #191919;
+    color: #ffffff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.tags span:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+}
+       

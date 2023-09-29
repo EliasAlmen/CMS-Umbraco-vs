@@ -46,7 +46,7 @@ namespace EC07_CMS_Umbraco_vs.Controllers
                 Services.ContentService.Save(newContact);
             }
 
-            TempData["FormSuccess"] = "Message sent successfully (see umbraco backoffice content section data/contact forms)";
+            TempData["FormSuccess"] = "Message sent successfully (see umbraco backoffice Content section data/contact forms)";
             return RedirectToCurrentUmbracoPage();
         }
     }

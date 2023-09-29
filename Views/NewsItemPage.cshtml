@@ -1,0 +1,78 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.NewsItemPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Services;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@inject IUserService UserService;
+@{
+    Layout = "_Main.cshtml";
+    var userService = UserService;
+    var image = Model.Value<IPublishedContent>("newsImage");
+}
+
+
+<!-- DETAILS -->
+    <main id="articledetail">
+        <section class="news">
+            <div class="container">
+                <div class="toprow">
+                    <div class="text">
+                        <h3>@Model.Name</h3>
+                    </div>
+                </div>
+                <div class="datetime">
+                    <p>@Model.CreateDate.ToString("MMM dd, yyyy") <i class="fa-solid fa-circle"></i> @Model.Value("newsCategory") <i class="fa-solid fa-circle"></i> @Model.CreatorName(UserService)</p>
+                </div>
+                <div class="articlerecent">
+                    <div class="details">
+                        <img height="500" width="758" src="@image.Url()" alt="">
+                        @Model.Value("newsContent")
+                        <div class="tags">
+                            @foreach (var tag in Model.Value<IEnumerable<string>>("newsTags"))
+                            {
+                                <span>@tag</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="recent">
+                        <input class="searchbar" type="text" placeholder="Type to search...">
+                        <div class="posts">
+                            <h3>Recent Posts</h3>
+                            <a href="" class="post">
+                                <h5>How To Blow Through Capital At An Incredible Rate</h5>
+                                <p>Jan 14, 2020</p>
+                            </a>
+                            <div class="devide"></div>
+                            <a href="" class="post">
+                                <h5>Design Studios That Everyone Should Know About?</h5>
+                                <p>Jan 14, 2020</p>
+                            </a>
+                            <div class="devide"></div>
+                            <a href="" class="post">
+                                <h5>How did we get 1M+ visitors in 30 days without anything!</h5>
+                                <p>Jan 14, 2020</p>
+                            </a>
+                            <div class="devide"></div>
+                            <a href="" class="post">
+                                <h5>Figma On Figma: How We Built Our Website Design System</h5>
+                                <p>Jan 14, 2020</p>
+                            </a>
+                        </div>
+                        <div class="categories">
+                            <h3>Categories</h3>
+                            <ul>
+                                <li><span class="headline">Technologoy - </span><span class="body">20 Posts</span></li>
+                                <li><span class="headline">Freelancing - </span><span class="body">07 Posts</span></li>
+                                <li><span class="headline">Writing - </span><span class="body">16 Posts</span></li>
+                                <li><span class="headline">Marketing - </span><span class="body">11 Posts</span></li>
+                                <li><span class="headline">Business - </span><span class="body">35 Posts</span></li>
+                                <li><span class="headline">Education - </span><span class="body">14 Posts</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    @await Html.PartialAsync("ArticleAndNews")

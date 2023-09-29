@@ -1,8 +1,10 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+﻿@using EC07_CMS_Umbraco_vs.ViewModels;
+@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Home>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "_Main.cshtml";
+    var subscribeForm = new SubscribeViewModel();
 }
 
 <section class="logos container" role="region">
@@ -235,4 +237,35 @@
                 </div>
             </div>
         </div>
+    </section>
+    
+    <!-- News -->
+    @await Html.PartialAsync("ArticleAndNews")
+    
+    <!-- Signup -->
+    <section class="signup">
+        <div class="container">
+            <h3>Get News Updates By Signup</h3>
+            @if (TempData["SubscribeSuccess"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SubscribeSuccess"]
+                </div>
+            }
+
+            @if (TempData["SubscribeError"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["SubscribeError"]
+                </div>
+            }
+            @using (Html.BeginUmbracoForm("Subscribe", "Subscription"))
+            {
+                <div class="email" id="subscription-form">
+                    <input asp-for="@subscribeForm.Email" placeholder="username@domain.com" />
+                    <button type="submit" class="btn theme-btn m-4">Subscribe <i class="fa-solid fa-arrow-up-right"></i></button>
+                </div>
+            }
+        </div>
+        <img class="background-image" src="~/images/background-wavy-lines.svg" alt="Background Wavy Lines">
     </section>
