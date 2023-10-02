@@ -18,68 +18,70 @@
 
 
 <!-- News -->
-    <section class="news">
-        <div class="container">
-            <div class="toprow">
-                <div class="text">
-                    <h6>Article & News</h3>
-                        <h3>Get Every Single Articles & News</h3>
-                </div>
-                <a href="/news" class="btn theme-btn">Browse Articles <i class="fa-solid fa-arrow-up-right"></i></a>
+<section class="news" id="news-section">
+    <div class="container">
+        <div class="toprow">
+            <div class="text">
+                <h6>
+                    Article & News
+                </h6>
+                <h3>Get Every Single Articles & News</h3>
             </div>
-            <div class="articles">
-                @foreach (var item in pagedItems!)
-            	{
-            	    var url = item.Url();
-            	    var date = item.CreateDate;
-            	    var image = item.Value<IPublishedContent>("newsImage");
-            	    var category = item.Value("newsCategory");
-            	    var title = item.Name();
-            	    var preamble = item.Value("newsPreamble");
-            	
-            	    <div class="article">
-                        <div class="image">
-                            <img src="@image?.Url()" width="420"
-                                height="230" alt="">
-                            <div class="date">
-                                <div class="number">@date.ToString("dd")</div>
-                                <div class="month">@date.ToString("MMM")</div>
-                            </div>
-                        </div>
-                        <h6 class="category">@category</h6>
-                        <a href="@url">
-                            <h5 class="header">@title</h5>
-                            <p class="body">@preamble</p>
-                        </a>
-                    </div>
-            	}
-            </div>
-            <div class="carousel">
-                
-                 @if (pageNumber > 1)
-                {
-                    <a href="?page=@(pageNumber - 1)" class="item-link link-prev mx-2" aria-label="Previous">
-                        <span aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-left"></i></span>
-                    </a>
-                }
+            <a href="/news" class="btn theme-btn">Browse Articles <i class="fa-solid fa-arrow-up-right"></i></a>
+        </div>
+        <div class="articles">
+            @foreach (var item in pagedItems!)
+            {
+                var url = item.Url();
+                var date = item.CreateDate;
+                var image = item.Value<IPublishedContent>("newsImage");
+                var category = item.Value("newsCategory");
+                var title = item.Name();
+                var preamble = item.Value("newsPreamble");
 
-                @for (int i = 1; i <= Math.Ceiling((decimal)totalItems / itemsPerPage); i++)
+                <div class="article">
+                    <div class="image">
+                        <img src="@image?.Url()" width="420"
+                             height="230" alt="">
+                        <div class="date">
+                            <div class="number">@date.ToString("dd")</div>
+                            <div class="month">@date.ToString("MMM")</div>
+                        </div>
+                    </div>
+                    <h6 class="category">@category</h6>
+                    <a href="@url">
+                        <h5 class="header">@title</h5>
+                        <p class="body">@preamble</p>
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="carousel">
+
+            @if (pageNumber > 1)
+            {
+                <a href="?page=@(pageNumber - 1)#news-section" class="item-link link-prev mx-2" aria-label="Previous">
+                    <span aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-left"></i></span>
+                </a>
+            }
+
+            @for (int i = 1; i <= Math.Ceiling((decimal)totalItems / itemsPerPage); i++)
+            {
+                if (i == pageNumber)
                 {
-                    if (i == pageNumber)
-                    {
-                        <span href="#" class="item-link active mx-2"><i class="fa-solid fa-circle"></i></span>
-                    }
-                    else
-                    {
-                        <span href="?page=@i" class="item-link mx-2"><i class="fa-solid fa-circle"></i></span>
-                    }
+                    <span href="#" class="item-link active mx-2"><i class="fa-solid fa-circle"></i></span>
                 }
-                @if (pageNumber < Math.Ceiling((decimal)totalItems / itemsPerPage))
+                else
                 {
-                <a href="?page=@(pageNumber + 1)" class="item-link link-next mx-2" aria-label="Next">
+                    <span href="?page=@i" class="item-link mx-2"><i class="fa-solid fa-circle"></i></span>
+                }
+            }
+            @if (pageNumber < Math.Ceiling((decimal)totalItems / itemsPerPage))
+            {
+                <a href="?page=@(pageNumber + 1)#news-section" class="item-link link-next mx-2" aria-label="Next">
                     <span aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-right"></i></span>
                 </a>
-                }
-            </div>
+            }
         </div>
-    </section>
+    </div>
+</section>

@@ -8,6 +8,32 @@
     Layout = "_Main.cshtml";
     var userService = UserService;
     var image = Model.Value<IPublishedContent>("newsImage");
+    
+    
+    var recentPosts = Umbraco?.Content(Guid.Parse("fbbb803a-58ee-48b0-86d7-b2e3c6b9ddec"))?
+        .ChildrenOfType("newsItemPage")?
+        .Where(x => x.IsVisible() && x.Id != Model.Id)
+        .OrderByDescending(x => x.CreateDate)
+        .Take(4)
+        .ToList();
+
+
+    // Fetching all the news articles
+    var allArticles = Umbraco?.Content(Guid.Parse("fbbb803a-58ee-48b0-86d7-b2e3c6b9ddec"))?
+        .ChildrenOfType("newsItemPage")?
+        .Where(x => x.IsVisible())
+        .ToList();
+    
+    // Grouping by newsCategory and counting
+    var categoryCounts = allArticles?
+        .GroupBy(x => x.Value<string>("newsCategory"))
+        .Select(group => new 
+        {
+            Category = group.Key,
+            Count = group.Count()
+        })
+        .ToList();
+
 }
 
 
@@ -38,35 +64,22 @@
                         <input class="searchbar" type="text" placeholder="Type to search...">
                         <div class="posts">
                             <h3>Recent Posts</h3>
-                            <a href="" class="post">
-                                <h5>How To Blow Through Capital At An Incredible Rate</h5>
-                                <p>Jan 14, 2020</p>
-                            </a>
-                            <div class="devide"></div>
-                            <a href="" class="post">
-                                <h5>Design Studios That Everyone Should Know About?</h5>
-                                <p>Jan 14, 2020</p>
-                            </a>
-                            <div class="devide"></div>
-                            <a href="" class="post">
-                                <h5>How did we get 1M+ visitors in 30 days without anything!</h5>
-                                <p>Jan 14, 2020</p>
-                            </a>
-                            <div class="devide"></div>
-                            <a href="" class="post">
-                                <h5>Figma On Figma: How We Built Our Website Design System</h5>
-                                <p>Jan 14, 2020</p>
-                            </a>
+                            @foreach (var post in recentPosts)
+                            {
+                                <a href="@post.Url()" class="post">
+                                    <h5>@post.Name()</h5>
+                                    <p>@post.CreateDate.ToString("MMM dd, yyyy")</p>
+                                </a>
+                                <div class="devide"></div>
+                            }
                         </div>
                         <div class="categories">
                             <h3>Categories</h3>
                             <ul>
-                                <li><span class="headline">Technologoy - </span><span class="body">20 Posts</span></li>
-                                <li><span class="headline">Freelancing - </span><span class="body">07 Posts</span></li>
-                                <li><span class="headline">Writing - </span><span class="body">16 Posts</span></li>
-                                <li><span class="headline">Marketing - </span><span class="body">11 Posts</span></li>
-                                <li><span class="headline">Business - </span><span class="body">35 Posts</span></li>
-                                <li><span class="headline">Education - </span><span class="body">14 Posts</span></li>
+                                @foreach (var category in categoryCounts)
+                                {
+                                    <li><span class="headline">@category.Category - </span><span class="body">@category.Count Posts</span></li>
+                                }
                             </ul>
                         </div>
                     </div>

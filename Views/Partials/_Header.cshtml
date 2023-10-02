@@ -20,7 +20,7 @@
 }
 
 
-    <header>
+    <header @if (Model.Url() != "/" && Model.Url() != "/home") { <text>id="newsheader"</text> }>
     <img class="bg-lines" src="~/images/background-lines.svg" alt="background-lines">
     <section class="navigation">
         <div class="container">
@@ -65,6 +65,32 @@
                     </div>
                 </div>
                 <img src="~/images/showcase-image.svg" alt="">
+            </div>
+        </section>
+    }
+    @if (Model.Url().StartsWith("/news/") && Model.Url() != "/news/")
+    {
+        // This is an individual article page
+        <section class="newsarticles">
+            <div class="container">
+                <div class="headline">
+                    <h3>Home News</h3>
+                    <h1>News & Articles</h1>
+                </div>
+            </div>
+        </section>
+    }
+    else if (Model.Url() != "/" && Model.Url() != "/home")
+    {
+        var breadcrumbTitle = Model.Value<string>("breadcrumbTitle") ?? "Default Title";
+        var breadcrumbMainHeading = Model.Value<string>("breadcrumbMainHeading") ?? "Default Heading";
+    
+        <section class="newsarticles">
+            <div class="container">
+                <div class="headline">
+                    <h3>@breadcrumbTitle</h3>
+                    <h1>@breadcrumbMainHeading</h1>
+                </div>
             </div>
         </section>
     }
