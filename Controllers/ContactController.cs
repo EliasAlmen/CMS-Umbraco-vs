@@ -21,6 +21,11 @@ namespace EC07_CMS_Umbraco_vs.Controllers
             _contextFactory = contextFactory;
         }
 
+        /// <summary>
+        /// Validate and gets Umbraco model -> null check -> save to umbraco
+        /// </summary>
+        /// <param name="contactForm"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult HandleContactForm(ContactFormViewModel contactForm)
         {

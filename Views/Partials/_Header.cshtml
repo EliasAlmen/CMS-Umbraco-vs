@@ -1,17 +1,18 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
 @{
+    //Navigation
     var selection = Umbraco.ContentAtRoot().FirstOrDefault()
     .Children()
     .Where(x => x.IsVisible());
 
+    // Globally setting values
     var globalConfig = Umbraco.ContentAtRoot().FirstOrDefault(x => x.ContentType.Alias == "globalConfigurations");
-
     string phoneNumber = "";
     string emailAddress = "";
     string streetAddress = "";
 
-    if(globalConfig != null)
+    if (globalConfig != null)
     {
         phoneNumber = globalConfig.Value<string>("headerPhonenumber");
         emailAddress = globalConfig.Value<string>("headerEmail");
@@ -19,8 +20,11 @@
     }
 }
 
-
-    <header @if (Model.Url() != "/" && Model.Url() != "/home") { <text>id="newsheader"</text> }>
+@* Condition for rendering correct class *@
+<header @if (Model.Url() != "/" && Model.Url() != "/home")
+{
+    <text>id="newsheader"</text>
+}>
     <img class="bg-lines" src="~/images/background-lines.svg" alt="background-lines">
     <section class="navigation">
         <div class="container">
@@ -44,7 +48,7 @@
                         <a href="/">Home</a>
                         @foreach (var item in selection)
                         {
-                            <a href="@item.Url()" >@item.Name()</a>
+                                <a href="@item.Url()" >@item.Name()</a>
                         }
                     </div>
                     <a class="btn theme-btn" href="login.html">Login <i class="fa-solid fa-arrow-up-right"></i></a>
@@ -52,46 +56,47 @@
             </nav>
         </div>
     </section>
-    @if (Model.Url() == "/" || Model.Url() == "/home")  
+    @* Condition for rendering the banner only for / *@
+    @if (Model.Url() == "/" || Model.Url() == "/home")
     {
-        <section class="banner">
-            <div class="container">
-                <div class="headline">
-                    <h1>@Model.Value("bannerHeadline")</h1>
-                    <p>@Model.Value("bannerSubline")</p>
-                    <div class="buttons">
-                        <a href="" class="btn theme-btn">Get Consulting <i class="fa-solid fa-arrow-up-right"></i></a>
-                        <a href="" class="btn grey-btn">Learn More <i class="fa-solid fa-arrow-up-right"></i></a>
+            <section class="banner">
+                <div class="container">
+                    <div class="headline">
+                        <h1>@Model.Value("bannerHeadline")</h1>
+                        <p>@Model.Value("bannerSubline")</p>
+                        <div class="buttons">
+                            <a href="" class="btn theme-btn">Get Consulting <i class="fa-solid fa-arrow-up-right"></i></a>
+                            <a href="" class="btn grey-btn">Learn More <i class="fa-solid fa-arrow-up-right"></i></a>
+                        </div>
                     </div>
+                    <img src="~/images/showcase-image.svg" alt="">
                 </div>
-                <img src="~/images/showcase-image.svg" alt="">
-            </div>
-        </section>
+            </section>
     }
+    @* Condition for rendering correct breadcrumb *@
     @if (Model.Url().StartsWith("/news/") && Model.Url() != "/news/")
     {
-        // This is an individual article page
-        <section class="newsarticles">
-            <div class="container">
-                <div class="headline">
-                    <h3>Home News</h3>
-                    <h1>News & Articles</h1>
+            <section class="newsarticles">
+                <div class="container">
+                    <div class="headline">
+                        <h3>Home News</h3>
+                        <h1>News & Articles</h1>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
     }
     else if (Model.Url() != "/" && Model.Url() != "/home")
     {
         var breadcrumbTitle = Model.Value<string>("breadcrumbTitle") ?? "Default Title";
         var breadcrumbMainHeading = Model.Value<string>("breadcrumbMainHeading") ?? "Default Heading";
-    
-        <section class="newsarticles">
-            <div class="container">
-                <div class="headline">
-                    <h3>@breadcrumbTitle</h3>
-                    <h1>@breadcrumbMainHeading</h1>
+
+            <section class="newsarticles">
+                <div class="container">
+                    <div class="headline">
+                        <h3>@breadcrumbTitle</h3>
+                        <h1>@breadcrumbMainHeading</h1>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
     }
 </header>

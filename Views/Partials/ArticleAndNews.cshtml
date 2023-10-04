@@ -1,6 +1,6 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
-
+    // Setting pagination
     var itemsPerPage = 3;
     var pageNumber = 1;
 
@@ -57,7 +57,7 @@
             }
         </div>
         <div class="carousel">
-
+            @* Hide show prev page *@
             @if (pageNumber > 1)
             {
                 <a href="?page=@(pageNumber - 1)#news-section" class="item-link link-prev mx-2" aria-label="Previous">
@@ -76,6 +76,7 @@
                     <span href="?page=@i" class="item-link mx-2"><i class="fa-solid fa-circle"></i></span>
                 }
             }
+            @* Hide show next page *@
             @if (pageNumber < Math.Ceiling((decimal)totalItems / itemsPerPage))
             {
                 <a href="?page=@(pageNumber + 1)#news-section" class="item-link link-next mx-2" aria-label="Next">

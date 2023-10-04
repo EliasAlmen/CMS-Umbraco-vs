@@ -25,7 +25,11 @@ namespace EC07_CMS_Umbraco_vs.Controllers
             _contextFactory = contextFactory;
         }
 
-
+        /// <summary>
+        /// Checks if input is already in database. If not -> Add and save DB. and also add to Umbraco backoffice.
+        /// </summary>
+        /// <param name="subscribeForm"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Subscribe(SubscribeViewModel subscribeForm)
         {
@@ -33,6 +37,7 @@ namespace EC07_CMS_Umbraco_vs.Controllers
 
             if (ModelState.IsValid)
             {
+                // Check if already saved.
                 var existingSubscriber = await _dataContext.Subscribers.FirstOrDefaultAsync(s => s.Email == subscribeForm.Email);
                 if (existingSubscriber == null)
                 {
@@ -40,18 +45,17 @@ namespace EC07_CMS_Umbraco_vs.Controllers
                     _dataContext.Subscribers.Add(subscriber);
                     await _dataContext.SaveChangesAsync();
 
+                    // Getting the Umbraco models
                     IPublishedContent? subscriberForms = null;
-
                     using (var context = _contextFactory.EnsureUmbracoContext())
                     {
                         subscriberForms = context.UmbracoContext.Content.GetAtRoot().DescendantsOrSelfOfType("subscribeForms").FirstOrDefault();
                     }
-
+                    // Null check and save to Umbraco
                     if (subscriberForms != null)
                     {
                         var newSubscriber = Services.ContentService.Create("Subscriber", subscriberForms.Id, "subscribeForm");
                         newSubscriber.SetValue("subscriberEmail", subscribeForm.Email);
-                        // If you have other fields, set those values too.
 
                         Services.ContentService.Save(newSubscriber);
                     }

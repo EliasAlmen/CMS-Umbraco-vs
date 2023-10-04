@@ -12,7 +12,7 @@ namespace EC07_CMS_Umbraco_vs.Contexts
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-
+        // Database for news letter subs
         public DbSet<SubscribersEntity> Subscribers { get; set;}
     }
 }

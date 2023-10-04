@@ -17,14 +17,14 @@
         .Take(4)
         .ToList();
 
-
-    // Fetching all the news articles
+    
+    // Gettings articles for CATEGORIES POSTS
     var allArticles = Umbraco?.Content(Guid.Parse("fbbb803a-58ee-48b0-86d7-b2e3c6b9ddec"))?
         .ChildrenOfType("newsItemPage")?
         .Where(x => x.IsVisible())
         .ToList();
     
-    // Grouping by newsCategory and counting
+    // Group and count
     var categoryCounts = allArticles?
         .GroupBy(x => x.Value<string>("newsCategory"))
         .Select(group => new 
@@ -33,7 +33,6 @@
             Count = group.Count()
         })
         .ToList();
-
 }
 
 
