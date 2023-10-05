@@ -33,6 +33,7 @@ namespace EC07_CMS_Umbraco_vs
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            // Connection to DB
             services.AddDbContext<DataContext>(x => x.UseSqlite(_config.GetConnectionString("SqliteDB")));
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
